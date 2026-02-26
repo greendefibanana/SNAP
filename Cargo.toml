@@ -1,0 +1,12 @@
+[workspace]
+members = [
+  "programs/snap-multiplayer-authority",
+  "programs/snap-vrf-engine",
+  "programs/snap-provenance-registry",
+]
+resolver = "2"
+
+[profile.release]
+overflow-checks = true
+lto = "fat"
+codegen-units = 1

@@ -1,0 +1,32 @@
+[toolchain]
+anchor_version = "0.32.1"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.devnet]
+snap_multiplayer_authority = "DiTw7JwsHqrNZSfHhPDxLAfzKWoCcqpo1Pk4y2toABfK"
+snap_vrf_engine = "6MNEnDDewn4VG2TKhQwk16D6VkvpvJLDzNk1PC37jfoA"
+snap_provenance_registry = "8o2oGKLyLfFcJziNXNthPs4QCMhLgN9vqmMEZZRnefee"
+
+[programs.localnet]
+snap_multiplayer_authority = "DiTw7JwsHqrNZSfHhPDxLAfzKWoCcqpo1Pk4y2toABfK"
+snap_vrf_engine = "6MNEnDDewn4VG2TKhQwk16D6VkvpvJLDzNk1PC37jfoA"
+snap_provenance_registry = "8o2oGKLyLfFcJziNXNthPs4QCMhLgN9vqmMEZZRnefee"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "npx cross-env ANCHOR_PROVIDER_URL=http://127.0.0.1:8899 ts-mocha -p ./tsconfig.test.json -t 1000000 tests/**/*.ts"
+
+[test]
+startup_wait = 5000
+
+[workspace]
+members = ["programs/snap-multiplayer-authority", "programs/snap-vrf-engine", "programs/snap-provenance-registry"]

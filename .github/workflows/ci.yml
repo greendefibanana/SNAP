@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  # ─────────────────────────────────────────────
+  # TypeScript unit tests (fast, no Solana toolchain)
+  # ─────────────────────────────────────────────
+  ts-unit-tests:
+    name: TypeScript Unit Tests (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Run TypeScript unit tests
+        run: npm test
+
+  # ─────────────────────────────────────────────
+  # Anchor program integration tests
+  # Runs on Linux only (anchor-cli IDL build works correctly on Linux)
+  # ─────────────────────────────────────────────
+  anchor-tests:
+    name: Anchor Program Integration Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Solana CLI
+        run: |
+          sh -c "$(curl -sSfL https://release.solana.com/v1.18.22/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> $GITHUB_PATH
+
+      - name: Install Anchor CLI
+        run: |
+          npm install -g @coral-xyz/anchor-cli@0.32.1
+          anchor --version
+
+      - name: Create localnet test wallet
+        run: |
+          mkdir -p ~/.config/solana
+          solana-keygen new --no-bip39-passphrase --silent --outfile ~/.config/solana/id.json
+          solana config set --url localnet
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Install Anchor test dependencies
+        run: |
+          npm install --save-dev \
+            @coral-xyz/anchor@0.32.1 \
+            chai \
+            mocha \
+            ts-mocha \
+            @types/chai \
+            @types/mocha
+
+      - name: Build Anchor programs (no IDL, avoids Windows file-lock)
+        run: anchor build --no-idl
+
+      - name: Run Anchor integration tests
+        run: npm run test:contracts
+        env:
+          ANCHOR_PROVIDER_URL: http://127.0.0.1:8899
+          ANCHOR_WALLET: ~/.config/solana/id.json

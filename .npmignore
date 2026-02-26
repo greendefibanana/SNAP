@@ -1,0 +1,41 @@
+# Source — not needed at runtime
+src/
+tests/
+programs/
+scripts/
+examples/
+docs/
+adapters/
+
+# Tooling
+.github/
+.anchor/
+target/
+target-prov/
+node_modules/
+
+# Build artifacts that should NOT be in the package
+dist/sim.js
+dist/sim.js.map
+dist/sim.d.ts
+dist/sim.d.ts.map
+dist/sim-wager.js
+dist/sim-wager.js.map
+dist/sim-wager.d.ts
+dist/sim-wager.d.ts.map
+dist/snap.bundle.js
+dist/snap.bundle.js.map
+
+# Config files
+tsconfig*.json
+Anchor.toml
+Cargo.toml
+Cargo.lock
+angular.json
+
+# Root clutter
+*.bundle.js
+*.tsbuildinfo
+buffer-keypair.json
+console.log('ok'))
+walkthrough.md.resolved

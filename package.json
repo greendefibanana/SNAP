@@ -1,0 +1,92 @@
+{
+    "name": "@snapshotsol/snap",
+    "version": "0.1.0",
+    "description": "Deterministic match-authority runtime for on-chain games. Modular engine (scoring, wagers, tokenization, VRF, provenance) with MagicBlock Ephemeral Rollup support.",
+    "keywords": [
+        "solana",
+        "gaming",
+        "blockchain",
+        "game-engine",
+        "magicblock",
+        "web3",
+        "nft",
+        "anchor",
+        "ephemeral-rollup",
+        "match-authority"
+    ],
+    "author": "SNAP Protocol",
+    "homepage": "https://github.com/your-org/snap#readme",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/your-org/snap.git"
+    },
+    "bugs": {
+        "url": "https://github.com/your-org/snap/issues"
+    },
+    "engines": {
+        "node": ">=18"
+    },
+    "license": "MIT",
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./rules": {
+            "import": "./dist/rules/index.js",
+            "types": "./dist/rules/index.d.ts"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "clean": "npx rimraf dist tsconfig.tsbuildinfo",
+        "prebuild": "npm run clean",
+        "prepublishOnly": "npm run build && npm test",
+        "build": "tsc",
+        "build:browser": "node scripts/build-browser.mjs",
+        "build:browser:min": "node scripts/build-browser.mjs min",
+        "build:browser:watch": "node scripts/build-browser.mjs watch",
+        "mb:er:doctor": "node scripts/magicblock-er-doctor.mjs",
+        "contracts:ids:set": "node scripts/set-program-ids.mjs",
+        "contracts:build": "anchor build",
+        "contracts:deploy:devnet": "anchor deploy --provider.cluster devnet",
+        "contracts:keys:gen": "solana-keygen new --no-bip39-passphrase --silent --force --outfile target/deploy/snap_multiplayer_authority-keypair.json && solana-keygen new --no-bip39-passphrase --silent --force --outfile target/deploy/snap_vrf_engine-keypair.json && solana-keygen new --no-bip39-passphrase --silent --force --outfile target/deploy/snap_provenance_registry-keypair.json",
+        "dev": "tsc --watch",
+        "sim": "npx tsx src/sim.ts",
+        "sim:wager": "npx tsx src/sim-wager.ts",
+        "demo:migrated": "npx tsx examples/demo-migrated-games.ts",
+        "test": "npx tsx src/engine/engine.test.ts && npx tsx src/modules/tokenization.test.ts && npx tsx src/modules/wagerEscrow.test.ts && npx tsx src/modules/scoring.test.ts && npx tsx src/modules/burn.test.ts && npx tsx src/modules/mutation.test.ts && npx tsx src/modules/registry.test.ts && npx tsx src/modules/wager/payout.test.ts && npx tsx src/modules/wager/validation.test.ts",
+        "test:engine": "npx tsx src/engine/engine.test.ts",
+        "test:tokenization": "npx tsx src/modules/tokenization.test.ts",
+        "test:wagerEscrow": "npx tsx src/modules/wagerEscrow.test.ts",
+        "test:scoring": "npx tsx src/modules/scoring.test.ts",
+        "test:burn": "npx tsx src/modules/burn.test.ts",
+        "test:mutation": "npx tsx src/modules/mutation.test.ts",
+        "test:wager:payout": "npx tsx src/modules/wager/payout.test.ts",
+        "test:wager:validation": "npx tsx src/modules/wager/validation.test.ts",
+        "test:contracts": "anchor test",
+        "test:contracts:devnet": "anchor test --skip-local-validator --provider.cluster devnet",
+        "test:all": "npm test && npm run test:contracts"
+    },
+    "dependencies": {
+        "@solana/web3.js": "^1.98.4"
+    },
+    "devDependencies": {
+        "@coral-xyz/anchor": "^0.32.1",
+        "@types/chai": "^5.2.3",
+        "@types/mocha": "^10.0.10",
+        "@types/node": "^25.3.1",
+        "chai": "^6.2.2",
+        "cross-env": "^10.1.0",
+        "esbuild": "^0.25.10",
+        "mocha": "^11.7.5",
+        "ts-mocha": "^11.1.0",
+        "tsx": "^4.21.0",
+        "typescript": "^5.3.3"
+    }
+}

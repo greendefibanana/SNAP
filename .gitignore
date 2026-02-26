@@ -1,0 +1,38 @@
+node_modules/
+dist/
+dist-browser/
+coverage/
+
+# Anchor and Rust
+target/
+target-*/
+**/target-*/
+.anchor/
+
+# Keys / Secrets
+**/*-keypair.json
+**/*.key
+**/*.pem
+.env
+.env.*
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+            
+# Solana / Magicblock
+test-ledger/
+.mb-ledger/
+*.log
+.npm-cache/
+.demo-signer.json
+tsconfig.tsbuildinfo
+snap.bundle.js
+target-prov/
+console.log('ok'))
