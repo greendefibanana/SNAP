@@ -1,6 +1,21 @@
+Hi team,
+
+I just noticed I accidentally pasted the wrong Loom link in my submission. That's completely my fault.
+
+Here's the correct demo video (it was recorded before the deadline):
+https://www.loom.com/share/c98fbc257d7c43fc84e9ff546f4b396d
+
+I've updated the GitHub README with the right link as well.
+
+Sorry about the mix up, and thanks for taking the time to review it.
+
+Best,
+Eze
+
 # SNAP
 
 SNAP is a deterministic match authority runtime for Snapshot.
+It is an open-source toolkit released under the MIT License.
 
 It provides:
 - A universal state/action model (`SnapState`, `SnapAction`, `SnapManifest`)
@@ -38,6 +53,7 @@ Architecture + backend replacement notes:
 - `docs/multiplayer-authority-engine.md`
 - `docs/game-dev-migration-playbook.md`
 - `docs/web2-team-quickstart.md`
+- `docs/snap-game-dev-e2e-guide.md`
 - `docs/devnet-contract-deploy.md`
 - `docs/magicblock-er-devnet-settlement.md`
 
